@@ -1,0 +1,8 @@
+product\com\ServletInitializer.class
+product\com\productyw\service\UserService.class
+product\com\productyw\Entity\User.class
+product\com\ProductApplication.class
+product\com\config\ComConfig.class
+product\com\productyw\Entity\ProductComment.class
+product\com\productyw\controller\ProductEndpointController.class
+product\com\productyw\Entity\Product.class
