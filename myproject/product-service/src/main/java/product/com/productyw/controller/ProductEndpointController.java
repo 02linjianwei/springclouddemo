@@ -57,6 +57,11 @@ public class ProductEndpointController {
     @RequestMapping("/LoadUser/{userId}")
     @HystrixCommand(fallbackMethod = "findAllFallback")
     public User LoadUser(@PathVariable Long userId) {
+        User user1 = new User();
+        user1.setId(123l);
+        user1.setAddress("fall");
+        user1.setName("fall");
+        logger.info("==============================="+user1);
         //User user = this.restTemplate.getForEntity("http://localhost:2100/users/{id}",User.class,userId).getBody();
         User user = this.restTemplate.getForEntity("http://userservice/users/{id}",User.class,userId).getBody();
         //User user = userService.comments(userId);
