@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import product.com.productyw.Entity.User;
 
-@FeignClient("USERSERVICE")
+//@FeignClient("USERSERVICE")
+
 public interface UserService {
-    @RequestMapping(value = "/users/{id}")
-    User comments(@PathVariable(value = "id") Long id);
+    User comments(Long id);
+    User load(Long id);
 }

@@ -63,8 +63,8 @@ public class ProductEndpointController {
         user1.setName("fall");
         logger.info("==============================="+user1);
         //User user = this.restTemplate.getForEntity("http://localhost:2100/users/{id}",User.class,userId).getBody();
-        User user = this.restTemplate.getForEntity("http://userservice/users/{id}",User.class,userId).getBody();
-        //User user = userService.comments(userId);
+        //User user = this.restTemplate.getForEntity("http://userservice/users/{id}",User.class,userId).getBody();
+        User user = userService.load(userId);
         if (user != null) {
             return user;
         }
