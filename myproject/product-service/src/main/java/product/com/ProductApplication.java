@@ -10,10 +10,12 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import product.com.msgmanage.SpringCloudBookChannels;
 import product.com.productyw.Entity.UserMsg;
 
 //EnableFeignClients：注意不在此根路径下得配：basePackages指定包路径
+@EnableResourceServer
 @EnableFeignClients
 @EnableDiscoveryClient
 @EnableHystrix
