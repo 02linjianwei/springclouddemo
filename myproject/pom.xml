@@ -11,6 +11,7 @@
         <module>config-server</module>
         <module>zipkin-server</module>
         <module>security-server</module>
+        <module>redis-demo</module>
     </modules>
     <parent>
             <groupId>org.springframework.boot</groupId>
