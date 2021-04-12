@@ -11,11 +11,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>redis-demo</artifactId>
+    <properties>
+        <lombok.version>1.16.10</lombok.version>
+        <jackson-annotations-version>2.6.5</jackson-annotations-version>
+    </properties>
 <dependencies>
-    <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-eureka</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--        <groupId>org.springframework.cloud</groupId>-->
+<!--        <artifactId>spring-cloud-starter-eureka</artifactId>-->
+<!--    </dependency>-->
     <!-- redis start-->
     <dependency>
         <groupId>org.springframework.data</groupId>
@@ -28,6 +32,11 @@
         <version>2.9.0</version>
     </dependency>
     <!-- redis end-->
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.16.10</version>
+    </dependency>
 </dependencies>
 <!--    <properties>-->
 <!--        <maven.compiler.source>8</maven.compiler.source>-->

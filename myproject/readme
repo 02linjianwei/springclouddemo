@@ -1,0 +1,6 @@
+1.第一次安装oracle登入不上的问题
+检查服务端与客户端的监听文件
+2.plsql客户端乱码
+select userenv('language') from dual;
+在环境变量中添加配置：
+NLS_LANG=AMERICAN_AMERICA.ZHS16GBK（这个value值就是sql查询的结果）
