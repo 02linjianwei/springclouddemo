@@ -12,6 +12,7 @@
         <module>zipkin-server</module>
         <module>security-server</module>
         <module>redis-demo</module>
+        <module>automybatis</module>
     </modules>
     <parent>
             <groupId>org.springframework.boot</groupId>
