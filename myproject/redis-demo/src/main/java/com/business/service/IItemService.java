@@ -1,7 +1,7 @@
 package com.business.service;
 
-import cn.ccb.clpm.data.business.entity.ItemEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.business.entity.ItemEntity;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author AutoGen
  * @since 2021-04-12
  */
-public interface IItemService extends IService<ItemEntity> {
-
+public interface ItemService  {
+ItemEntity getItemInfo();
 }

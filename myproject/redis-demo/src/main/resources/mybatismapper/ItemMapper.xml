@@ -9,5 +9,7 @@
         <result column="NAME" property="name" />
         <result column="CREATETIME" property="createtime" />
     </resultMap>
-
+<select id="selectByCode" resultType="com.business.entity.ItemEntity">
+    select <include refid="Base_Column_list" /> from item where code = #{code}
+</select>
 </mapper>

@@ -1,9 +1,9 @@
 package com.business.service.impl;
 
-import cn.ccb.clpm.data.business.entity.ItemEntity;
-import cn.ccb.clpm.data.business.mapper.ItemMapper;
-import cn.ccb.clpm.data.business.service.IItemService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.business.entity.ItemEntity;
+import com.business.mapper.ItemMapper;
+import com.business.service.ItemService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +15,11 @@ import org.springframework.stereotype.Service;
  * @since 2021-04-12
  */
 @Service
-public class ItemServiceImpl extends ServiceImpl<ItemMapper, ItemEntity> implements IItemService {
-
+public class ItemServiceImpl  implements ItemService {
+    @Autowired
+    private ItemMapper itemMapper;
+    @Override
+    public ItemEntity getItemInfo() {
+        return null;
+    }
 }

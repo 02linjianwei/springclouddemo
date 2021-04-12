@@ -1,7 +1,8 @@
 package com.business.mapper;
 
-import cn.ccb.clpm.data.business.entity.ItemEntity;
-import cn.ccb.clpm.common.mapper.MybatisBaseMapper;
+
+import com.business.entity.ItemEntity;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import cn.ccb.clpm.common.mapper.MybatisBaseMapper;
  * @author AutoGen
  * @since 2021-04-12
  */
-public interface ItemMapper extends MybatisBaseMapper<ItemEntity> {
+@Mapper
+public interface ItemMapper {
 
 }
