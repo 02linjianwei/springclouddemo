@@ -11,6 +11,6 @@ import com.business.entity.ItemEntity;
  * @author AutoGen
  * @since 2021-04-12
  */
-public interface ItemService  {
+public interface ItemService   {
 ItemEntity getItemInfo();
 }
