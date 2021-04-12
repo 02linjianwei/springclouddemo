@@ -13,7 +13,7 @@ private static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:ORCL";
 private static final String DB_DRIVER = "oracle.jdbc.OracleDriver";
 private static final String DB_USER = "scott";
 private static final String DB_PASSWORD = "orcl";
-private static final String TABLE = "emp";
+private static final String TABLE = "item";
 
         public static void main(String[] args) {
             AutoGenerator mpg = new AutoGenerator();
