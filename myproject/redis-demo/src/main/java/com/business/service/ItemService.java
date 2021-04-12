@@ -1,7 +1,8 @@
 package com.business.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.business.entity.ItemEntity;
+
+import java.io.IOException;
 
 /**
  * <p>
@@ -12,5 +13,5 @@ import com.business.entity.ItemEntity;
  * @since 2021-04-12
  */
 public interface ItemService   {
-ItemEntity getItemInfo();
+ItemEntity getItemInfo(String itemcode) throws IOException;
 }

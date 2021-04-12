@@ -1,7 +1,6 @@
 package com.business.controller;
 
 
-import com.business.service.IItemService;
 import com.business.service.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,8 +34,13 @@ private ItemService iItemService;
         Map<String,Object> resMap = new HashMap<>();
         resMap.put("code",0);
         resMap.put("msg","成功");
-        resMap.put("data",iItemService.get)
-        return
+    try {
+        resMap.put("data",iItemService.getItemInfo(itemcode));
+    } catch (IOException e) {
+        resMap.put("code",-1);
+        resMap.put("msg","失败"+e.getMessage());
+    }
+    return resMap;
     }
 }
 

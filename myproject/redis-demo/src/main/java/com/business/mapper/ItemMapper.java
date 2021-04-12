@@ -1,7 +1,7 @@
 package com.business.mapper;
 
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.service.IService;
 import com.business.entity.ItemEntity;
 import org.apache.ibatis.annotations.Mapper;
 
