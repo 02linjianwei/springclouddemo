@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -29,8 +30,8 @@ public class ItemEntity implements Serializable {
     @TableField("NAME")
     private String name;
 
-    @TableField("CREATETIME")
-    private LocalDateTime createtime;
+    @TableField("CREATE_TIME")
+    private Date createtime;
 
 
     public Long getId() {
@@ -57,11 +58,11 @@ public class ItemEntity implements Serializable {
         this.name = name;
     }
 
-    public LocalDateTime getCreatetime() {
+    public Date getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(LocalDateTime createtime) {
+    public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
 

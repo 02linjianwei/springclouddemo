@@ -1,7 +1,7 @@
 package com.business.mapper;
 
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.business.entity.ItemEntity;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,6 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2021-04-12
  */
 @Mapper
-public interface ItemMapper extends IService<ItemEntity> {
-
+public interface ItemMapper extends BaseMapper<ItemEntity> {
+   ItemEntity selectByCode(String code);
 }

@@ -26,10 +26,10 @@ import java.util.Map;
 @RequestMapping("/item")
 public class ItemController {
     private static final Logger log = LoggerFactory.getLogger(ItemController.class);
-private static final String prefix="cache/pass";
+private static final String prefix="/cache/pass";
 @Autowired
 private ItemService iItemService;
-@RequestMapping(value = prefix+"/item/info")
+@RequestMapping(value = prefix+"/info/{itemcode}")
     public Map<String, Object> getItem(@PathVariable String itemcode) {
         Map<String,Object> resMap = new HashMap<>();
         resMap.put("code",0);
