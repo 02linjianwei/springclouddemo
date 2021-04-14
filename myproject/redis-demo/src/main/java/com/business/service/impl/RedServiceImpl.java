@@ -3,6 +3,7 @@ package com.business.service.impl;
 import com.business.dto.RedPacketDto;
 import com.business.entity.RedDetailEntity;
 import com.business.entity.RedRecordEntity;
+import com.business.entity.RedRobRecordEntity;
 import com.business.mapper.RedDetailMapper;
 import com.business.mapper.RedRecordMapper;
 import com.business.mapper.RedRobRecordMapper;
@@ -51,7 +52,14 @@ public class RedServiceImpl implements IRedService {
     }
 
     @Override
+    @Async
+    @Transactional(rollbackFor = Exception.class)
     public void reCordfRobPacket(Integer userId, String redId, Integer amount) {
-
+        RedRobRecordEntity redRobRecordEntity  = new RedRobRecordEntity();
+        redRobRecordEntity.setUserId(Long.valueOf(userId));
+        redRobRecordEntity.setRedPacket(redId);
+        redRobRecordEntity.setAmount(new BigDecimal(amount));
+        redRobRecordEntity.setRobTime(new Date());
+        redRobRecordMapper.insert(redRobRecordEntity);
     }
 }

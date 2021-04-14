@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class RedPacketServiceImpl implements IRedPacketService {
@@ -47,6 +48,15 @@ public class RedPacketServiceImpl implements IRedPacketService {
         Boolean res = click(redId);
         if (res) {
             Object value = redisTemplate.opsForList().rightPop(redId);
+            if (value != null) {
+                String redTotalKey = redId+":total";
+                Integer currTotal = valueOperations.get(redTotalKey) != null? (Integer) valueOperations.get(redTotalKey) :0;
+                valueOperations.set(redTotalKey,currTotal-1);
+                redService.reCordfRobPacket(userId,redId,Integer.getInteger(value.toString()));
+                valueOperations.set(redId+userId+":rob",value,24L, TimeUnit.HOURS);
+                log.info("当前用户抢到红包了:userId={} key={} 金额={} ",userId,redId,value);
+                return (Integer) value;
+            }
         }
         return null;
     }

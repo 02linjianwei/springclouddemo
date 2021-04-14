@@ -78,23 +78,32 @@ public class RedisTest  extends BaseAppManager {
         String content = "stringRedisTemplate实战";
         String key = "stringRedisTemplate:two";
         //content = objectMapper.writeValueAsString(user);
-        redisTemplate.delete(key);
+        //redisTemplate.delete(key);
         ListOperations valueOperations = redisTemplate.opsForList();
-        for (Person person:userList) {
-            //从队尾添加
-            valueOperations.leftPush(key,objectMapper.writeValueAsString(person));
-        }
-        Object result = valueOperations.range(key,0,userList.size()-1);
-        Person person;
-        if (result != null) {
-            List<String> personList = (List<String>) result;
-            if (!CollectionUtils.isEmpty(personList)) {
-                for (String person1 : personList) {
-                    person = objectMapper.readValue(person1.toString(), Person.class);
-                    log.info("====toString()========"+person.getName());
-                }
+        if (!redisTemplate.hasKey(key)) {
+            for (Person person:userList) {
+                //从队尾添加
+                valueOperations.leftPush(key,objectMapper.writeValueAsString(person));
             }
         }
+        Object result = valueOperations.rightPop(key);
+        log.info("====size========"+valueOperations.size(key));
+        Person person;
+        if (result != null) {
+            person = objectMapper.readValue(result.toString(), Person.class);
+            log.info("====toString()========"+person.getName());
+        }
+        //Object result = valueOperations.range(key,0,userList.size()-1);
+
+//        if (result != null) {
+//            List<String> personList = (List<String>) result;
+//            if (!CollectionUtils.isEmpty(personList)) {
+//                for (String person1 : personList) {
+//                    person = objectMapper.readValue(person1.toString(), Person.class);
+//                    log.info("====toString()========"+person.getName());
+//                }
+//            }
+//        }
         log.info("============"+result);
     }
     /**

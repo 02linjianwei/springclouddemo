@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -39,7 +40,7 @@ public class RedRobRecordEntity implements Serializable {
     private BigDecimal amount;
 
     @TableField("ROB_TIME")
-    private LocalDateTime robTime;
+    private Date robTime;
 
     @TableField("IS_ACTIVE")
     private String isActive;
@@ -77,11 +78,11 @@ public class RedRobRecordEntity implements Serializable {
         this.amount = amount;
     }
 
-    public LocalDateTime getRobTime() {
+    public Date getRobTime() {
         return robTime;
     }
 
-    public void setRobTime(LocalDateTime robTime) {
+    public void setRobTime(Date robTime) {
         this.robTime = robTime;
     }
 
