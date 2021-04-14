@@ -1,10 +1,16 @@
 package com.config;
 
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
+import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.extension.incrementer.OracleKeyGenerator;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.FieldRetrievingFactoryBean;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +31,18 @@ public class CommonConfig {
         MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
         /** 设置mybatis configuration 扫描路径 */
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        mybatisSqlSessionFactoryBean.setConfigLocation((resolver.getResources("classpath:mybatis-config.xml"))[0]);
+        MybatisConfiguration mybatisConfiguration = new MybatisConfiguration();
+        mybatisConfiguration.setJdbcTypeForNull(null);
+        mybatisSqlSessionFactoryBean.setConfiguration(mybatisConfiguration);
+        OracleKeyGenerator oracleKeyGenerator = new OracleKeyGenerator();
+//        FieldRetrievingFactoryBean fieldRetrievingFactoryBean = new FieldRetrievingFactoryBean();
+//        fieldRetrievingFactoryBean.setStaticField(String.valueOf(FieldStrategy.IGNORED));
+        GlobalConfig.DbConfig dbConfig = new GlobalConfig.DbConfig();
+        dbConfig.setKeyGenerator(oracleKeyGenerator);
+        GlobalConfig globalConfig = new GlobalConfig();
+        globalConfig.setDbConfig(dbConfig);
+        mybatisSqlSessionFactoryBean.setGlobalConfig(globalConfig);
+        //mybatisSqlSessionFactoryBean.setConfigLocation((resolver.getResources("classpath:mybatis-config.xml"))[0]);
         // sqlSessionFactoryBean.setConfigLocation(new ClassPathResource(MYBATIS_CONFIG));
         /** 设置datasource */
         mybatisSqlSessionFactoryBean.setDataSource(applicationContext.getBean(DataSource.class));

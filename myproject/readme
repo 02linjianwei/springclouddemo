@@ -1,16 +1,24 @@
 1.第一次安装oracle登入不上的问题
 检查服务端与客户端的监听文件
+==========================
 2.plsql客户端乱码
 select userenv('language') from dual;
 在环境变量中添加配置：
 NLS_LANG=AMERICAN_AMERICA.ZHS16GBK（这个value值就是sql查询的结果）
+==========================
 3.集成mybatisplus
-1.依赖
+1).依赖
 <dependency>
 <groupId>org.mybatis.spring.boot</groupId>
 <artifactId>mybatis-spring-boot-starter</artifactId>
 <version>1.3.2</version>
 </dependency>
 必须
-2.绑定不了basemapper
+2).绑定不了basemapper
 MybatisSqlSessionFactoryBean要手动配置上
+==========================
+4当编译的时候一直报程序包找不到,程序那边却没标红
+1)可能是引用包导错
+==========================
+5. mybatis插入null值的问题
+MybatisSqlSessionFactoryBean 增加相应的配置

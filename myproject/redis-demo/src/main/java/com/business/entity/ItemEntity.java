@@ -1,10 +1,8 @@
 package com.business.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,6 +14,7 @@ import java.util.Date;
  * @author AutoGen
  * @since 2021-04-12
  */
+@KeySequence("seq_ITEM")
 @TableName("ITEM")
 public class ItemEntity implements Serializable {
 

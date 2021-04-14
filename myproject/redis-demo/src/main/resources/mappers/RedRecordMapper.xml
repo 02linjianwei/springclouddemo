@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.mapper.RedRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.business.entity.RedRecordEntity">
+        <result column="ID" property="id" />
+        <result column="USER_ID" property="userId" />
+        <result column="RED_PACKET" property="redPacket" />
+        <result column="TOTAL" property="total" />
+        <result column="AMOUT" property="amout" />
+        <result column="IS_ACTIVE" property="isActive" />
+        <result column="CREATE_TIME" property="createTime" />
+    </resultMap>
+
+</mapper>

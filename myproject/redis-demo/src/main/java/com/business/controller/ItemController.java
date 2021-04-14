@@ -26,21 +26,22 @@ import java.util.Map;
 @RequestMapping("/item")
 public class ItemController {
     private static final Logger log = LoggerFactory.getLogger(ItemController.class);
-private static final String prefix="/cache/pass";
-@Autowired
-private ItemService iItemService;
-@RequestMapping(value = prefix+"/info/{itemcode}")
+    private static final String prefix = "/cache/pass";
+    @Autowired
+    private ItemService iItemService;
+
+    @RequestMapping(value = prefix + "/info/{itemcode}")
     public Map<String, Object> getItem(@PathVariable String itemcode) {
-        Map<String,Object> resMap = new HashMap<>();
-        resMap.put("code",0);
-        resMap.put("msg","成功");
-    try {
-        resMap.put("data",iItemService.getItemInfo(itemcode));
-    } catch (IOException e) {
-        resMap.put("code",-1);
-        resMap.put("msg","失败"+e.getMessage());
-    }
-    return resMap;
+        Map<String, Object> resMap = new HashMap<>();
+        resMap.put("code", 0);
+        resMap.put("msg", "成功");
+        try {
+            resMap.put("data", iItemService.getItemInfo(itemcode));
+        } catch (IOException e) {
+            resMap.put("code", -1);
+            resMap.put("msg", "失败" + e.getMessage());
+        }
+        return resMap;
     }
 }
 
