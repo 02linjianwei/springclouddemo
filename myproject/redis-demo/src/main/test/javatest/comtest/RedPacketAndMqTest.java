@@ -1,20 +1,24 @@
 package javatest.comtest;
 
+import com.business.rabbitmqdemo.entity.BasicPublisher;
 import com.business.rabbitmqdemo.entity.Publisher;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.util.RedPacketUtil;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-public class RedPacketTest extends BaseAppManager{
-    private static final Logger log = LoggerFactory.getLogger(RedPacketTest.class);
+public class RedPacketAndMqTest extends BaseAppManager{
+    private static final Logger log = LoggerFactory.getLogger(RedPacketAndMqTest.class);
     @Autowired
     private Publisher publisher;
+    @Autowired
+    private BasicPublisher basicPublisher;
+    @Autowired
+    private ObjectMapper objectMapper;
 @Test
     public void one() {
         Integer amount = 20;
@@ -31,5 +35,10 @@ public class RedPacketTest extends BaseAppManager{
     @Test
     public void two() {
       publisher.sendMsg();
+    }
+    @Test
+    public void three() {
+       String msg = "-------这是一串字符串消息-------";
+       basicPublisher.sendMsg(msg);
     }
 }
