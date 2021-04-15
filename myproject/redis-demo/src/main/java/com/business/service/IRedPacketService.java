@@ -3,13 +3,11 @@ package com.business.service;
 import com.business.dto.RedPacketDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IRedPacketService {
     String handOut(RedPacketDto redPacketDto) throws Exception;
 
-    Integer rob(Integer userId, String redId);
+    Map rob(Integer userId, String redId) throws Exception;
 
-    void recordRedPacket(RedPacketDto redPacketDto, String redId, List<Integer> list);
-
-    void reCordfRobPacket(Integer userId, String redId, Integer amount);
 }
