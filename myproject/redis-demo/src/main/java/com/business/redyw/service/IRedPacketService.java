@@ -1,8 +1,7 @@
-package com.business.service;
+package com.business.redyw.service;
 
-import com.business.dto.RedPacketDto;
+import com.business.redyw.dto.RedPacketDto;
 
-import java.util.List;
 import java.util.Map;
 
 public interface IRedPacketService {

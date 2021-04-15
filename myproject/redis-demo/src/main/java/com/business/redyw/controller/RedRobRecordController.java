@@ -1,7 +1,6 @@
-package com.business.controller;
+package com.business.redyw.controller;
 
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-14
  */
 @RestController
-@RequestMapping("/redDetailEntity")
-public class RedDetailController {
+@RequestMapping("/redRobRecordEntity")
+public class RedRobRecordController {
 
 }
 

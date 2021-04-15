@@ -1,4 +1,4 @@
-package com.business.entity;
+package com.business.redyw.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 
@@ -8,47 +8,41 @@ import java.util.Date;
 
 /**
  * <p>
- * �������
+ * 
  * </p>
  *
  * @author AutoGen
  * @since 2021-04-14
  */
-@KeySequence("seq_RED_RECORD")
-@TableName("RED_RECORD")
-public class RedRecordEntity implements Serializable {
+@KeySequence("seq_RED_ROB_RECORD")
+@TableName("RED_ROB_RECORD")
+public class RedRobRecordEntity implements Serializable {
 
     private static final long serialVersionUID=1L;
 
     @TableId(value = "ID",type= IdType.INPUT)
     private Long id;
 
-    /**
-     * ���id
-     */
     @TableField("USER_ID")
     private Long userId;
 
     /**
-     * ��ȫ���һ����
+     * ������
      */
     @TableField("RED_PACKET")
     private String redPacket;
 
     /**
-     * ��
+     * ����
      */
-    @TableField("TOTAL")
-    private Long total;
+    @TableField("AMOUNT")
+    private BigDecimal amount;
 
-    @TableField("AMOUT")
-    private BigDecimal amout;
+    @TableField("ROB_TIME")
+    private Date robTime;
 
     @TableField("IS_ACTIVE")
-    private Integer isActive;
-
-    @TableField("CREATE_TIME")
-    private Date createTime;
+    private String isActive;
 
 
     public Long getId() {
@@ -75,48 +69,39 @@ public class RedRecordEntity implements Serializable {
         this.redPacket = redPacket;
     }
 
-    public Long getTotal() {
-        return total;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
-    public void setTotal(Long total) {
-        this.total = total;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
-    public BigDecimal getAmout() {
-        return amout;
+    public Date getRobTime() {
+        return robTime;
     }
 
-    public void setAmout(BigDecimal amout) {
-        this.amout = amout;
+    public void setRobTime(Date robTime) {
+        this.robTime = robTime;
     }
 
-    public Integer getIsActive() {
+    public String getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(Integer isActive) {
+    public void setIsActive(String isActive) {
         this.isActive = isActive;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 
     @Override
     public String toString() {
-        return "RedRecordEntity{" +
+        return "RedRobRecordEntity{" +
         "id=" + id +
         ", userId=" + userId +
         ", redPacket=" + redPacket +
-        ", total=" + total +
-        ", amout=" + amout +
+        ", amount=" + amount +
+        ", robTime=" + robTime +
         ", isActive=" + isActive +
-        ", createTime=" + createTime +
         "}";
     }
 }

@@ -1,7 +1,7 @@
-package com.business.mapper;
+package com.business.redyw.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.business.entity.RedDetailEntity;
+import com.business.redyw.entity.RedDetailEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -1,4 +1,4 @@
-package com.business.dto;
+package com.business.redyw.dto;
 
 import lombok.Data;
 import lombok.ToString;

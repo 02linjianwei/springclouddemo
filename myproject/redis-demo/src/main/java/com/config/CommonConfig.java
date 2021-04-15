@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.incrementer.OracleKeyGenerator;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import com.business.rabbitmqdemo.entity.Publisher;
 import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -53,7 +54,9 @@ public class CommonConfig {
 //        sqlSessionFactoryBean.setMapperLocations(new Resource[]{new ClassPathResource("classpath:mapper/*.xml")});
 
         /** 设置typeAlias 包扫描路径 */
-        mybatisSqlSessionFactoryBean.setTypeAliasesPackage("com.business.mapper");
+        mybatisSqlSessionFactoryBean.setTypeAliasesPackage("com.business.redyw.mapper");
         return mybatisSqlSessionFactoryBean;
     }
+
+
 }

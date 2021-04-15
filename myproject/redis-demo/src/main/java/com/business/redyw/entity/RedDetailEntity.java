@@ -1,10 +1,9 @@
-package com.business.entity;
+package com.business.redyw.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**

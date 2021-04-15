@@ -1,8 +1,7 @@
-package com.business.entity;
+package com.business.redyw.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 
-import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
 

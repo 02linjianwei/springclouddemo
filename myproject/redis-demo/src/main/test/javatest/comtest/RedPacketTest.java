@@ -1,15 +1,20 @@
 package javatest.comtest;
 
+import com.business.rabbitmqdemo.entity.Publisher;
 import com.util.RedPacketUtil;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class RedPacketTest extends BaseAppManager{
     private static final Logger log = LoggerFactory.getLogger(RedPacketTest.class);
+    @Autowired
+    private Publisher publisher;
 @Test
     public void one() {
         Integer amount = 20;
@@ -22,5 +27,9 @@ public class RedPacketTest extends BaseAppManager{
         sum += i;
     }
     log.info("所有随机金锭叠加之和={}元",sum);
+    }
+    @Test
+    public void two() {
+      publisher.sendMsg();
     }
 }
