@@ -1,7 +1,6 @@
 package javatest.comtest;
 
-import com.business.rabbitmqdemo.entity.BasicPublisher;
-import com.business.rabbitmqdemo.entity.Publisher;
+import com.business.rabbitmqdemo.entity.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.util.RedPacketUtil;
 import org.junit.Test;
@@ -19,6 +18,8 @@ public class RedPacketAndMqTest extends BaseAppManager{
     private BasicPublisher basicPublisher;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private ModelPublisher modelPublisher;
 @Test
     public void one() {
         Integer amount = 20;
@@ -40,5 +41,25 @@ public class RedPacketAndMqTest extends BaseAppManager{
     public void three() {
        String msg = "-------这是一串字符串消息-------";
        basicPublisher.sendMsg(msg);
+    }
+    @Test
+    public void four() {
+        Person person = new Person(1,"大圣","debug");
+        basicPublisher.sendObjectMsg(person);
+    }
+    @Test
+    public void five() {
+        EventInfo eventInfo = new EventInfo(1,"增删改查模块","基于fanoutExchange的消息","这是基于fanoutExchang的消息模型");
+        modelPublisher.sendMsg(eventInfo);
+    }
+    @Test
+    public void six() {
+    String msg = "这是topicExchange消息模型的消息";
+    String routingKeyOne = "local.rabbitmqdemo.mq.topic.routing.java.key";
+    String routingKeyTwo = "local.rabbitmqdemo.mq.topic.routing.php.python.key";
+    String routingKeyThree = "local.rabbitmqdemo.mq.topic.routing.key";
+    //modelPublisher.sendMsgTopic(msg,routingKeyOne);
+    //modelPublisher.sendMsgTopic(msg,routingKeyTwo);
+    modelPublisher.sendMsgTopic(msg,routingKeyThree);
     }
 }

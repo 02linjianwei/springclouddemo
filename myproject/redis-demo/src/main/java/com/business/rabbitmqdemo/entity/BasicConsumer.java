@@ -22,4 +22,12 @@ public class BasicConsumer {
             log.error("基本消息模型-消费者-发生异常:",e.fillInStackTrace());
         }
     }
+    @RabbitListener(queues = "${mq.object.info.queue.name}",containerFactory ="simpleRabbitListenerContainerFactory")
+    public void consumeObjectMsg(@Payload Person person) {
+        try {
+            log.info("基本消息模型-消费者-监听消费到消息:{}",person);
+        } catch (Exception e) {
+            log.error("基本消息模型-消费者-发生异常:",e.fillInStackTrace());
+        }
+    }
 }

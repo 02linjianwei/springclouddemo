@@ -83,7 +83,7 @@ public class RabbitmqConfig {
         });
         return rabbitTemplate;
     }
-
+    //==================================start=================================
     /**
      * 创建队列
      * @return
@@ -110,5 +110,92 @@ public class RabbitmqConfig {
     public Binding basicBinging() {
         return BindingBuilder.bind(basicQueue()).to(basicExchange()).with(environment.getProperty("mq.basic.info.routing.key.name"));
     }
+    //==================================end=================================
+    //==================================start=================================
+    @Bean(name="objectQueue")
+    public Queue objectQueue() {
+        return new Queue(environment.getProperty("mq.object.info.queue.name"),true);
+    }
+    /**
+     * 创建交换机
+     * @return
+     */
+    @Bean
+    public DirectExchange objectExchange() {
+        return new DirectExchange(environment.getProperty("mq.object.info.exchange.name"),true,false);
+    }
 
+    /**
+     * 创建绑定
+     * @return
+     */
+    @Bean
+    public Binding objectBinging() {
+        return BindingBuilder.bind(objectQueue()).to(objectExchange()).with(environment.getProperty("mq.object.info.routing.key.name"));
+    }
+    //==================================end=================================
+    //==================================start=================================
+    @Bean(name="fanoutQueueOne")
+    public Queue fanoutQueueOne() {
+        return new Queue(environment.getProperty("mq.fanout.queue.one.name"),true);
+    }
+    @Bean(name="fanoutQueueTwo")
+    public Queue fanoutQueueTwo() {
+        return new Queue(environment.getProperty("mq.fanout.queue.two.name"),true);
+    }
+    /**
+     * 创建交换机
+     * @return
+     */
+    @Bean
+    public FanoutExchange fanoutExchange() {
+        return new FanoutExchange(environment.getProperty("mq.fanout.exchange.name"),true,false);
+    }
+    /**
+     * 创建绑定
+     * @return
+     */
+    @Bean
+    public Binding fanoutBingingOne() {
+        return BindingBuilder.bind(fanoutQueueOne()).to(fanoutExchange());
+    }
+    /**
+     * 创建绑定
+     * @return
+     */
+    @Bean
+    public Binding fanoutBingingTwo() {
+        return BindingBuilder.bind(fanoutQueueTwo()).to(fanoutExchange());
+    }
+
+    //==================================end=================================
+//==================================start=================================
+    @Bean
+    public TopicExchange topicExchange() {
+        return new TopicExchange(environment.getProperty("mq.topic.exchange.name"));
+    }
+    @Bean(name="topicQueueOne")
+    public Queue topicQueueOne() {
+        return new Queue(environment.getProperty("mq.topic.queue.one.name"),true);
+    }
+    @Bean(name="topicQueueTwo")
+    public Queue topicQueueTwo() {
+        return new Queue(environment.getProperty("mq.topic.queue.two.name"),true);
+    }
+    /**
+     * 创建绑定
+     * @return
+     */
+    @Bean
+    public Binding topicBingingOne() {
+        return BindingBuilder.bind(topicQueueOne()).to(topicExchange()).with(environment.getProperty("mq.topic.routing.key.one.name"));
+    }
+    /**
+     * 创建绑定
+     * @return
+     */
+    @Bean
+    public Binding topicBingingTwo() {
+        return BindingBuilder.bind(topicQueueTwo()).to(topicExchange()).with(environment.getProperty("mq.topic.routing.key.two.name"));
+    }
 }
