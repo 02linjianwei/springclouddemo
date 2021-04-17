@@ -1,14 +1,17 @@
 package com.config;
 
+import com.business.rabbitmqdemo.entity.KnowIedgeManualConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -20,8 +23,12 @@ public class RabbitmqConfig {
     private CachingConnectionFactory connectionFactory;
     @Autowired
     private Environment environment;
+    @Autowired
+    private KnowIedgeManualConsumer knowIedgeManualConsumer;
+
 
     /**
+     * 监听器容器工厂实例
      * 单一消费者实例的配置
      * @return
      */
@@ -56,6 +63,56 @@ public class RabbitmqConfig {
         factory.setMaxConcurrentConsumers(15);
         //设置并发消费者实例中每个实例拉取的消息数量
         factory.setPrefetchCount(10);
+        return factory;
+    }
+    /**
+     * 监听器容器工厂实例
+     * 单一消费者实例的配置
+     * @return
+     */
+    @Bean("simpleRabbitListenerContainerAuto")
+    public SimpleRabbitListenerContainerFactory listenerContainerAuto() {
+        //定义消息监听器所在的容器工厂
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        //设置容器工厂所用的实例
+        factory.setConnectionFactory(connectionFactory);
+        //设置消息在传输中的格式,在这里采用JSON的格式进行传输
+        factory.setMessageConverter(new Jackson2JsonMessageConverter());
+        //设置并发消费者实例的初始数量
+        factory.setConcurrentConsumers(1);
+        //设置并发消费者实例的最大数量
+        factory.setMaxConcurrentConsumers(1);
+        //设置并发消费者实例中每个实例拉取的消息数量
+        factory.setPrefetchCount(1);
+        //设置确认消费模式为自动确认消费AUTO
+        factory.setAcknowledgeMode(AcknowledgeMode.AUTO);
+        return factory;
+    }
+    /**
+     * 监听器容器工厂实例
+     * 单一消费者实例的配置
+     * @return
+     */
+    @Bean("SimpleMessageListenerContainerManual")
+    public SimpleMessageListenerContainer listenerContainerManual(@Qualifier("manualQueue") Queue manualQueue) {
+        //定义消息监听器所在的容器工厂
+        SimpleMessageListenerContainer factory = new SimpleMessageListenerContainer();
+        //设置容器工厂所用的实例
+        factory.setConnectionFactory(connectionFactory);
+        //设置消息在传输中的格式,在这里采用JSON的格式进行传输
+        factory.setMessageConverter(new Jackson2JsonMessageConverter());
+        //设置并发消费者实例的初始数量
+        factory.setConcurrentConsumers(1);
+        //设置并发消费者实例的最大数量
+        factory.setMaxConcurrentConsumers(1);
+        //设置并发消费者实例中每个实例拉取的消息数量
+        factory.setPrefetchCount(1);
+        //设置确认消费模式为自动确认消费AUTO
+        factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        //指定该容器的监听队列
+        factory.setQueues(manualQueue);
+        //指定该容器中消息监听器,即消费者
+        factory.setMessageListener(knowIedgeManualConsumer);
         return factory;
     }
     @Bean
@@ -198,4 +255,42 @@ public class RabbitmqConfig {
     public Binding topicBingingTwo() {
         return BindingBuilder.bind(topicQueueTwo()).to(topicExchange()).with(environment.getProperty("mq.topic.routing.key.two.name"));
     }
+    //==================================end=================================
+
+    //==================================start=================================
+    @Bean
+    public DirectExchange autoExchange() {
+        return new DirectExchange(environment.getProperty("mq.auto.knowledge.exchange.name"));
+    }
+    @Bean(name="autoQueue")
+    public Queue autoQueueOne() {
+        return new Queue(environment.getProperty("mq.auto.knowledge.queue.name"),true);
+    }
+    /**
+     * 创建绑定
+     * @return
+     */
+    @Bean
+    public Binding autoBinging() {
+        return BindingBuilder.bind(autoQueueOne()).to(autoExchange()).with(environment.getProperty("mq.auto.knowledge.routing.key.name"));
+    }
+    //==================================end=================================
+    //==================================start=================================
+    @Bean(name="manualQueue")
+    public Queue manualQueue() {
+        return new Queue(environment.getProperty("mq.manual.knowledge.queue.name"),true);
+    }
+    @Bean
+    public TopicExchange manualExchange() {
+        return new TopicExchange(environment.getProperty("mq.manual.knowledge.exchange.name"));
+    }
+    /**
+     * 创建绑定
+     * @return
+     */
+    @Bean
+    public Binding manualBinging() {
+        return BindingBuilder.bind(manualQueue()).to(manualExchange()).with(environment.getProperty("mq.manual.knowledge.routing.key.name"));
+    }
+    //==================================end=================================
 }

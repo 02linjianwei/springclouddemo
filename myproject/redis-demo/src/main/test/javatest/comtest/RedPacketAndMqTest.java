@@ -20,6 +20,10 @@ public class RedPacketAndMqTest extends BaseAppManager{
     private ObjectMapper objectMapper;
     @Autowired
     private ModelPublisher modelPublisher;
+    @Autowired
+    private KnowIedgePublisher knowIedgePublisher;
+    @Autowired
+    private KnowIedgeManualPublisher knowIedgeManualPublisher;
 @Test
     public void one() {
         Integer amount = 20;
@@ -61,5 +65,21 @@ public class RedPacketAndMqTest extends BaseAppManager{
     //modelPublisher.sendMsgTopic(msg,routingKeyOne);
     //modelPublisher.sendMsgTopic(msg,routingKeyTwo);
     modelPublisher.sendMsgTopic(msg,routingKeyThree);
+    }
+    @Test
+    public void seven() {
+    KnowledgeInfo knowledgeInfo = new KnowledgeInfo();
+    knowledgeInfo.setId(10010);
+    knowledgeInfo.setCode("auto");
+    knowledgeInfo.setMode("基于AUTO的消息确认消费模式");
+    knowIedgePublisher.sendAutoMsg(knowledgeInfo);
+    }
+    @Test
+    public void test8() {
+        KnowledgeInfo knowledgeInfo = new KnowledgeInfo();
+        knowledgeInfo.setId(10011);
+        knowledgeInfo.setCode("manual");
+        knowledgeInfo.setMode("基于manual的消息确认消费模式");
+        knowIedgeManualPublisher.sendManualMsg(knowledgeInfo);
     }
 }
