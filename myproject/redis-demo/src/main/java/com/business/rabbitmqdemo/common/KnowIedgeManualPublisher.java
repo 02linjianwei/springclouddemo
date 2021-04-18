@@ -1,4 +1,4 @@
-package com.business.rabbitmqdemo.entity;
+package com.business.rabbitmqdemo.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;

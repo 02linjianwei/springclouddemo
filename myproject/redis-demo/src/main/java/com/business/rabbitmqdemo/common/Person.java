@@ -1,4 +1,4 @@
-package com.business.rabbitmqdemo.entity;
+package com.business.rabbitmqdemo.common;
 
 import lombok.Data;
 import lombok.ToString;

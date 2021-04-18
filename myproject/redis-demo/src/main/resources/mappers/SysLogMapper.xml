@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.rabbitmqdemo.loginlogyw.mapper.SysLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ccb.clpm.data.business.entity.SysLogEntity">
+        <id column="ID" property="id" />
+        <result column="USER_ID" property="userId" />
+        <result column="MODULE" property="module" />
+        <result column="DATA" property="data" />
+        <result column="MEMO" property="memo" />
+        <result column="CREATE_TIME" property="createTime" />
+    </resultMap>
+
+</mapper>

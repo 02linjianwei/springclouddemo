@@ -1,6 +1,6 @@
 package com.config;
 
-import com.business.rabbitmqdemo.entity.KnowIedgeManualConsumer;
+import com.business.rabbitmqdemo.common.KnowIedgeManualConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.*;
@@ -291,6 +291,24 @@ public class RabbitmqConfig {
     @Bean
     public Binding manualBinging() {
         return BindingBuilder.bind(manualQueue()).to(manualExchange()).with(environment.getProperty("mq.manual.knowledge.routing.key.name"));
+    }
+    //==================================end=================================
+    //==================================start=================================
+    @Bean(name="loginQueue")
+    public Queue loginQueue() {
+        return new Queue(environment.getProperty("mq.login.queue.name"),true);
+    }
+    @Bean
+    public TopicExchange loginExchange() {
+        return new TopicExchange(environment.getProperty("mq.login.exchange.name"));
+    }
+    /**
+     * 创建绑定
+     * @return
+     */
+    @Bean
+    public Binding loginBinging() {
+        return BindingBuilder.bind(loginQueue()).to(loginExchange()).with(environment.getProperty("mq.login.routing.key.name"));
     }
     //==================================end=================================
 }

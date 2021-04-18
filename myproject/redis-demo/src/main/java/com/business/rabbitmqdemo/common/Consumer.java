@@ -1,6 +1,5 @@
-package com.business.rabbitmqdemo.entity;
+package com.business.rabbitmqdemo.common;
 
-import com.business.redyw.controller.ItemController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;

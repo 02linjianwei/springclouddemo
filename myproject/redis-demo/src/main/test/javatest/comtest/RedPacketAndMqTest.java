@@ -1,6 +1,6 @@
 package javatest.comtest;
 
-import com.business.rabbitmqdemo.entity.*;
+import com.business.rabbitmqdemo.common.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.util.RedPacketUtil;
 import org.junit.Test;

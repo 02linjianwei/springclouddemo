@@ -1,4 +1,4 @@
-package com.business.rabbitmqdemo.entity;
+package com.business.rabbitmqdemo.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
