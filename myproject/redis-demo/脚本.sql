@@ -133,3 +133,47 @@ create sequence SEQ_SYS_LOG
     cache 20;
 
 -- 20210418
+--20210419
+create table mq_order
+(
+    id            number(11) not null,
+    order_id      number(11) not null,
+    business_time date,
+    memo          varchar2(255)
+)
+;
+-- Add comments to the table
+comment on table user_order
+  is '用户下单记录表';
+alter table mq_ORDER
+    add constraint mq_order_id primary key (ID);
+create sequence seq_mq_order
+    minvalue 1
+    maxvalue 99999999999999999999
+    start with 1
+    increment by 1
+    cache 20;
+-- Create table
+create table user_order
+(
+    id          number(11) not null,
+    order_no    varchar2(255) not null,
+    user_id     number(11) not null,
+    status      varchar2(5),
+    is_active   varchar2(5),
+    create_time date,
+    update_time date
+)
+;
+-- Add comments to the columns
+comment on column user_order.status
+  is '1=已保存2=已付款3=已取消';
+-- Create/Recreate primary, unique and foreign key constraints
+alter table user_order
+    add constraint u_id primary key (ID);
+create sequence SEQ_USER_ORDER
+    minvalue 1
+    maxvalue 9999999999999999999999999
+    start with 1
+    increment by 1
+    cache 20;

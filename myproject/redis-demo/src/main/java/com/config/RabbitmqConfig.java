@@ -350,4 +350,38 @@ public class RabbitmqConfig {
     }
 
     //==================================end=================================
+    //==================================start=================================
+    @Bean
+    public Queue orderDeadQueue() {
+        Map<String,Object> args = new HashMap<>();
+        //创建死信交换机
+        args.put("x-dead-letter-exchange",environment.getProperty("mq.order.dead.exchange.name"));
+        // 创建死信路由
+        args.put("x-dead-letter-routing-key",environment.getProperty("mq.order.dead.routing.key.name"));
+        //设定ttl，单位为ms,在这里指的是10s
+        args.put("x-message-ttl",10000);
+        return new Queue(environment.getProperty("mq.order.dead.queue.name"),true,false,false,args);
+    }
+
+    @Bean
+    public TopicExchange orderProducerExchange() {
+        return new TopicExchange(environment.getProperty("mq.producer.order.exchange.name"),true,false);
+    }
+    @Bean
+    public Binding orderProducerBinding() {
+        return BindingBuilder.bind(orderDeadQueue()).to(orderProducerExchange()).with(environment.getProperty("mq.producer.order.routing.key.name"));
+    }
+    @Bean
+    public Queue realOrderConsumerQueue() {
+        return new Queue(environment.getProperty("mq.consumer.order.real.queue.name"),true);
+    }
+    @Bean
+    public TopicExchange orderDeadExchange() {
+        return new TopicExchange(environment.getProperty("mq.order.dead.exchange.name"),true,false);
+    }
+    @Bean
+    public Binding orderDeadBinding() {
+        return BindingBuilder.bind(realOrderConsumerQueue()).to(orderDeadExchange()).with(environment.getProperty("mq.order.dead.routing.key.name"));
+    }
+    //==================================end=================================
 }
