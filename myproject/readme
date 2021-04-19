@@ -22,3 +22,7 @@ MybatisSqlSessionFactoryBean要手动配置上
 ==========================
 5. mybatis插入null值的问题
 MybatisSqlSessionFactoryBean 增加相应的配置
+=================================
+6.MapperScan
+1)会对扫描到的接口生成实现类,所有存在生成多个bean报错的情况
+2）正则配置:com.business.**.mapper

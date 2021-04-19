@@ -24,6 +24,8 @@ public class RedPacketAndMqTest extends BaseAppManager{
     private KnowIedgePublisher knowIedgePublisher;
     @Autowired
     private KnowIedgeManualPublisher knowIedgeManualPublisher;
+    @Autowired
+    private DeadPublisher deadPublisher;
 @Test
     public void one() {
         Integer amount = 20;
@@ -81,5 +83,13 @@ public class RedPacketAndMqTest extends BaseAppManager{
         knowledgeInfo.setCode("manual");
         knowledgeInfo.setMode("基于manual的消息确认消费模式");
         knowIedgeManualPublisher.sendManualMsg(knowledgeInfo);
+    }
+    @Test
+    public void test9() throws InterruptedException {
+       DeadInfo deadInfo = new DeadInfo(1,"~~~~~我是第1则消息~~~~~");
+       deadPublisher.sendAutoMsg(deadInfo);
+       deadInfo = new DeadInfo(1,"~~~~~我是第二则消息~~~~~");
+       deadPublisher.sendAutoMsg(deadInfo);
+       Thread.sleep(30000);
     }
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.business.rabbitmqdemo.loginlogyw.mapper.SysLogMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cn.ccb.clpm.data.business.entity.SysLogEntity">
+    <resultMap id="BaseResultMap" type="com.business.rabbitmqdemo.loginlogyw.entity.SysLogEntity">
         <id column="ID" property="id" />
         <result column="USER_ID" property="userId" />
         <result column="MODULE" property="module" />

@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-@MapperScan("com.business.redyw.mapper")
+@MapperScan("com.business.**.mapper")
 @SpringBootApplication
 @EnableAsync
 public class ApplicationForRedis {
