@@ -1,7 +1,11 @@
 package javatest.comtest;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.business.rabbitmqdemo.common.*;
+import com.business.redyw.mapper.RedRecordMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.util.RedPacketUtil;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -26,6 +30,8 @@ public class RedPacketAndMqTest extends BaseAppManager{
     private KnowIedgeManualPublisher knowIedgeManualPublisher;
     @Autowired
     private DeadPublisher deadPublisher;
+    @Autowired
+    private RedRecordMapper redRecordMapper;
 @Test
     public void one() {
         Integer amount = 20;
@@ -91,5 +97,12 @@ public class RedPacketAndMqTest extends BaseAppManager{
        deadInfo = new DeadInfo(1,"~~~~~我是第二则消息~~~~~");
        deadPublisher.sendAutoMsg(deadInfo);
        Thread.sleep(30000);
+    }
+    @Test
+    public void test10() throws InterruptedException {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        PageInfo pageInfo = PageHelper.startPage(1,5).doSelectPageInfo(()->redRecordMapper.selectList(queryWrapper));
+        System.out.println("======================="+pageInfo);
+
     }
 }

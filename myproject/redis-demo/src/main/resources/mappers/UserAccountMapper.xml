@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.balanceyw.mapper.UserAccountMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.business.balanceyw.entity.UserAccountEntity">
+        <id column="ID" property="id" />
+        <result column="USER_ID" property="userId" />
+        <result column="AMOUNT" property="amount" />
+        <result column="VERSION" property="version" />
+        <result column="IS_ACTIVE" property="isActive" />
+    </resultMap>
+<update id="updateByPKVersion" parameterType="java.util.Map" >
+    update user_account set amount = amount-#{money},version=version+1 where id = #{id} and version = #{version} and amount >0 and (amount - #{money})>=0
+</update>
+</mapper>

@@ -52,8 +52,10 @@ public class RedPacketServiceImpl implements IRedPacketService {
         Boolean res = click(redId);
         if (res) {
             final String lockKey = redId+userId+"-lock";
+            //分布式锁控制start
             Boolean lock = valueOperations.setIfAbsent(lockKey,redId);
-            redisTemplate.expire(lockKey,24L,TimeUnit.HOURS);
+            redisTemplate.expire(lockKey,24L,TimeUnit.SECONDS);
+            //分布式锁控制end
             try {
                 if (lock) {
                     Object value = redisTemplate.opsForList().rightPop(redId);

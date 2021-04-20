@@ -177,3 +177,46 @@ create sequence SEQ_USER_ORDER
     start with 1
     increment by 1
     cache 20;
+
+--20210420
+
+-- Create table
+create table user_account
+(
+    id        number(11) not null,
+    user_id   number(11),
+    amount    number(10,4),
+    version   number(11),
+    is_active varchar2(2) default 1
+)
+;
+-- Add comments to the table
+comment on table user_account
+  is '用户账户余额记录表';
+-- Create/Recreate primary, unique and foreign key constraints
+alter table user_account
+    add constraint user_account_id primary key (ID);
+-- Create sequence
+create sequence seq_user_account
+    minvalue 1
+    maxvalue 99999999999999999999999999999
+    start with 1
+    increment by 1;
+-- Create table
+create table user_account_record
+(
+    id          number(11) not null,
+    account_id  number(11) not null,
+    money       number(10,4),
+    create_time date
+)
+;
+-- Create/Recreate primary, unique and foreign key constraints
+alter table user_account_record
+    add constraint user_accont_record_id primary key (ID);
+-- Create sequence
+create sequence seq_user_account_record
+    minvalue 1
+    maxvalue 999999999999999999999999999
+    start with 1
+    increment by 1;
