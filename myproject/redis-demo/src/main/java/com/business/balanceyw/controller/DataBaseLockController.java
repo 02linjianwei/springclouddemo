@@ -36,7 +36,8 @@ public class DataBaseLockController {
         }
         BaseResponse response = new BaseResponse(StatusCode.Success);
         try {
-            dataBaseLockService.takeMoney(userAccountDto);
+            //dataBaseLockService.takeMoneyByVersion(userAccountDto);//乐观锁
+            dataBaseLockService.takeMoneyByZk(userAccountDto);//zk分布式锁
         } catch (Exception e) {
             response = new BaseResponse(StatusCode.Fail.getCode(),e.getMessage());
         }

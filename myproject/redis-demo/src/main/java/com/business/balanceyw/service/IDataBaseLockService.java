@@ -11,5 +11,6 @@ import com.business.balanceyw.dto.UserAccountDto;
  * @since 2021-04-20
  */
 public interface IDataBaseLockService {
-void takeMoney(UserAccountDto userAccountDto) throws Exception;
+void takeMoneyByVersion(UserAccountDto userAccountDto) throws Exception;
+    void takeMoneyByZk(UserAccountDto userAccountDto) throws Exception;
 }

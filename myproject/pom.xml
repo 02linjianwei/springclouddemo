@@ -30,7 +30,7 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <guava.version>20.0</guava.version>
+        <guava.version>25.1-jre</guava.version>
     </properties>
 <dependencyManagement>
     <dependencies>
@@ -67,7 +67,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>29.0-jre</version>
+            <version>25.1-jre</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

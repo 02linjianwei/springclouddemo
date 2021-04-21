@@ -7,11 +7,15 @@ import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.github.pagehelper.PageHelper;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.retry.RetryNTimes;
 import org.apache.ibatis.plugin.Interceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
@@ -20,6 +24,8 @@ import javax.sql.DataSource;
 public class CommonConfig {
     @Autowired
     ApplicationContext applicationContext;
+    @Autowired
+    private Environment environment;
 
     @Bean("sqlSessionFactory")
     public MybatisSqlSessionFactoryBean createSqlSessionFactoryBean() throws Exception {
@@ -56,6 +62,13 @@ public class CommonConfig {
         mybatisSqlSessionFactoryBean.setPlugins(interceptors);
         return mybatisSqlSessionFactoryBean;
     }
-
+    @Bean
+    public CuratorFramework curatorFramework() {
+        //创建curatorFramework实例
+        //指定了客户端连接到zookeeper服务端的策略;这里是采用重试的机制(5次,每次间隔1秒)
+        CuratorFramework curatorFramework = CuratorFrameworkFactory.builder().connectString(environment.getProperty("zk.host")).namespace(environment.getProperty("zk.namespace")).retryPolicy(new RetryNTimes(5,1000)).build();
+        curatorFramework.start();
+        return curatorFramework;
+    }
 
 }
