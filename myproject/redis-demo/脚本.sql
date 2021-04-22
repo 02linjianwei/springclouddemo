@@ -220,3 +220,28 @@ create sequence seq_user_account_record
     maxvalue 999999999999999999999999999
     start with 1
     increment by 1;
+--20210820
+
+-- Create table
+create table praise
+(
+    id          number(11) not null,
+    blog_id     number(11) not null,
+    user_id     number(11) not null,
+    praise_time date,
+    status      varchar2(2) default 1,
+    is_active   varchar2(2) default 1,
+    create_time date,
+    update_time date
+)
+;
+-- Create/Recreate primary, unique and foreign key constraints
+alter table praise
+    add constraint praise_id primary key (ID);
+-- Create sequence
+create sequence SEQ_PRAISE
+    minvalue 1
+    maxvalue 99999999999999999999
+    start with 1
+    increment by 1
+    cache 20;

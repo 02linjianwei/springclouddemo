@@ -9,6 +9,8 @@ import com.business.balanceyw.mapper.UserAccountRecordMapper;
 import com.business.balanceyw.service.IDataBaseLockService;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class DataBaseLockServiceImpl implements IDataBaseLockService {
     private UserAccountRecordMapper userAccountRecordMapper;
     @Autowired
     private CuratorFramework curatorFramework;
+    @Autowired
+    private RedissonClient redissonClient;
 
     @Override
     public void takeMoneyByVersion(UserAccountDto userAccountDto) throws Exception {
@@ -88,5 +92,46 @@ public class DataBaseLockServiceImpl implements IDataBaseLockService {
 
         }
 
+    }
+
+    @Override
+    public void takeMoneyByRedisson(UserAccountDto userAccountDto) throws Exception {
+        final String lockName = "redissonOneLock-"+userAccountDto.getUserId();
+        //获取分布式锁
+        RLock rLock = redissonClient.getLock(lockName);
+        try {
+            //不是常用的
+            //rLock.lock();
+            //常用：即上锁后不管何种状况,10秒后自动释放
+            rLock.lock(10L,TimeUnit.SECONDS);
+            //可重入锁设置,未获取到锁就一直尝试,最多到100秒,上锁成功则10秒后自动解锁
+            rLock.tryLock(100L,10L,TimeUnit.SECONDS);
+            QueryWrapper<UserAccountEntity> queryWrapper = new QueryWrapper();
+            queryWrapper.eq("USER_ID", userAccountDto.getUserId());
+            UserAccountEntity userAccountEntity = userAccountMapper.selectOne(queryWrapper);
+            if (userAccountEntity != null && (userAccountEntity.getAmount().doubleValue() - userAccountDto.getAmount()) >= 0) {
+                userAccountEntity.setAmount(BigDecimal.valueOf(userAccountEntity.getAmount().doubleValue() - userAccountDto.getAmount()));
+                userAccountMapper.updateById(userAccountEntity);
+                UserAccountRecordEntity userAccountRecordEntity = new UserAccountRecordEntity();
+                userAccountRecordEntity.setCreateTime(new Date());
+                userAccountRecordEntity.setAccountId(userAccountEntity.getId());
+                userAccountRecordEntity.setMoney(BigDecimal.valueOf(userAccountDto.getAmount()));
+                userAccountRecordMapper.insert(userAccountRecordEntity);
+                log.info("当前待提现的金额为:{} 用户账户余额为:{}", userAccountDto.getAmount(), userAccountEntity.getAmount());
+
+            } else {
+                throw new Exception("账户不存在或账户余额不足");
+            }
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (rLock != null) {
+                rLock.unlock();
+                //在某些严格业务场景下,可以调用强制释放分布式锁的方法
+                //rLock.forceUnlock();
+            }
+
+        }
     }
 }

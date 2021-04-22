@@ -48,7 +48,7 @@ public class CommonConfig {
         /** 设置datasource */
         mybatisSqlSessionFactoryBean.setDataSource(applicationContext.getBean(DataSource.class));
         // sqlSessionFactoryBean.setDataSource(dataSource);
-        mybatisSqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:mappers/*.xml"));//加载配置文件的地址;
+        mybatisSqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:mappers/**/*Mapper.xml"));//加载配置文件的地址;
         //sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:sqlmapper/*.xml"));//加载配置文件的地址;
 
 //        sqlSessionFactoryBean.setMapperLocations(new Resource[]{new ClassPathResource("classpath:mapper/*.xml")});
