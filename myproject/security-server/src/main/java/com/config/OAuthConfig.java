@@ -1,6 +1,7 @@
 package com.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,16 +11,23 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
+/**
+ * 认证与授权服务
+ */
 @Configuration
 public class OAuthConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     private UserDetailsService userDetailsService;
+    private final static String RESOURCE_ID="user";
 @Override
 /**
  * 客户端详情信息在这里进行初始化，你能够把客户端详情信息写死在这里或者是通过数据库来存储调取详情信息；
+ * 认证：即可以通过授权码类型获取令牌,也可以通过密码类型获取令牌
  */
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         //通过内存方式设置认证的客户端
@@ -30,9 +38,10 @@ public class OAuthConfig extends AuthorizationServerConfigurerAdapter {
             .authorities("oauth2")
             .secret("123456")
             .and().withClient("client_2")
-            .authorizedGrantTypes("password", "refresh_token")
-            .scopes("server")
+            .authorizedGrantTypes("authorization_code","password", "refresh_token")
+            .scopes("all")
             .authorities("oauth2")
+            .redirectUris("http://localhst:8888/")
             .secret("123456");
     }
 @Override
@@ -42,11 +51,24 @@ public class OAuthConfig extends AuthorizationServerConfigurerAdapter {
     public void configure(AuthorizationServerEndpointsConfigurer authorizationServerEndpointsConfigurer) {
         //设置用户及认证的实现
         authorizationServerEndpointsConfigurer.authenticationManager(authenticationManager)
+                .tokenStore(new InMemoryTokenStore())//使用InMemoryTokenStore将令牌保存在内存中(也可以保存到数据库和redis，默认实现JdbcTokenStore和RedisTokenStore)
+                .accessTokenConverter(accessTokenConverter())//使用jwt作为令牌的转换器
+                .reuseRefreshTokens(false)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
+    }
+    //配置JWT转换器
+@Bean
+    public JwtAccessTokenConverter accessTokenConverter() {
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey("secret");//签名密钥
+        return converter;
     }
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        // 允许表单认证
-        security.allowFormAuthenticationForClients();
+
+        security
+                .tokenKeyAccess("permitAll()")//允许所有人请求令牌
+                .checkTokenAccess("isAuthenticated()")//已验证的客户端才能请求check_token
+                .allowFormAuthenticationForClients();// 允许表单认证
     }
 }
