@@ -1,4 +1,4 @@
-package chainofresponsibilitypattern;
+package pattern;
 
 public class LoginUser {
     private String loginName;

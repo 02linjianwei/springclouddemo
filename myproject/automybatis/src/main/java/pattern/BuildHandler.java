@@ -1,4 +1,4 @@
-package chainofresponsibilitypattern;
+package pattern;
 
 public abstract class BuildHandler<T> {
     protected BuildHandler next;
