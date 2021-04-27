@@ -1,4 +1,4 @@
-package cn.ccb.clpm.data.DesignPattern;
+package cn.myprojectdemo.data.DesignPattern;
 
 public class LazySingleton {
 //    private static LazySingleton lazySingleton;

@@ -1,4 +1,4 @@
-package cn.ccb.clpm.data.DesignPattern;
+package cn.myprojectdemo.data.DesignPattern;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;

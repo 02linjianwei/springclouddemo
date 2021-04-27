@@ -1,4 +1,4 @@
-package cn.ccb.clpm.data.DesignPattern;
+package cn.myprojectdemo.data.DesignPattern;
 
 import java.util.Random;
 import java.util.concurrent.Callable;

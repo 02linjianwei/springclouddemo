@@ -1,6 +1,4 @@
-package cn.ccb.clpm.data.DesignPattern;
-
-import java.util.concurrent.locks.ReentrantLock;
+package cn.myprojectdemo.data.DesignPattern;
 
 public class SynchronizedDemo {
     String lockA = "lockA";

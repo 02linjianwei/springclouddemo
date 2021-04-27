@@ -1,6 +1,5 @@
-package cn.ccb.clpm.data.DesignPattern;
+package cn.myprojectdemo.data.DesignPattern;
 
-import javax.sql.rowset.CachedRowSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;

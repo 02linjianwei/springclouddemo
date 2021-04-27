@@ -1,4 +1,4 @@
-package cn.ccb.clpm.data.DesignPattern;
+package cn.myprojectdemo.data.DesignPattern;
 
 import java.util.ArrayList;
 import java.util.List;
