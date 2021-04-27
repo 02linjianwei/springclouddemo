@@ -39,9 +39,11 @@ public class OAuthConfig extends AuthorizationServerConfigurerAdapter {
             .secret("123456")
             .and().withClient("client_2")
             .authorizedGrantTypes("authorization_code","password", "refresh_token")
+            .accessTokenValiditySeconds(1000)//访问令牌的有效时长
+            .refreshTokenValiditySeconds(1000)//刷新令牌的有效时长
             .scopes("all")
             .authorities("oauth2")
-            .redirectUris("http://localhst:8888/")
+            .redirectUris("http://192.168.0.150:8910/")
             .secret("123456");
     }
 @Override
@@ -63,6 +65,12 @@ public class OAuthConfig extends AuthorizationServerConfigurerAdapter {
         converter.setSigningKey("secret");//签名密钥
         return converter;
     }
+
+    /**
+     * 授权服务器安全认证的相关配置,用于配置spring security，生成对应的安全过滤器调用链,主要控制oauth/**端点的相关访问
+     * @param security
+     * @throws Exception
+     */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 
@@ -70,5 +78,7 @@ public class OAuthConfig extends AuthorizationServerConfigurerAdapter {
                 .tokenKeyAccess("permitAll()")//允许所有人请求令牌
                 .checkTokenAccess("isAuthenticated()")//已验证的客户端才能请求check_token
                 .allowFormAuthenticationForClients();// 允许表单认证
+
+
     }
 }

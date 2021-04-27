@@ -13,6 +13,7 @@
         <module>security-server</module>
         <module>redis-demo</module>
         <module>automybatis</module>
+        <module>oauth2-client</module>
     </modules>
     <parent>
             <groupId>org.springframework.boot</groupId>
