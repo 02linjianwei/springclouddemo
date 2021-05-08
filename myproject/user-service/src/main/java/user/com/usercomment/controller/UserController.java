@@ -25,7 +25,7 @@ public class UserController {
     protected Tracer tracer;
 
     @RequestMapping("/{id}")
-    public User comments(@PathVariable Long id) {
+    public User comments(@PathVariable(value = "id") Long id) {
         logger.info("==========user=========");
         User user = new User();
         user.setId(123l);

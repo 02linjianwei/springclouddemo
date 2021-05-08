@@ -23,7 +23,6 @@ public class OAuthConfig extends AuthorizationServerConfigurerAdapter {
     private AuthenticationManager authenticationManager;
     @Autowired
     private UserDetailsService userDetailsService;
-    private final static String RESOURCE_ID="user";
 @Override
 /**
  * 客户端详情信息在这里进行初始化，你能够把客户端详情信息写死在这里或者是通过数据库来存储调取详情信息；
