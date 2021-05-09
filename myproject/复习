@@ -1,0 +1,28 @@
+--eureak
+1.eureak内部默认整合ribbon，实现负载均衡
+2.cap定理
+c:一至性，数据的一至性，a:可用性,集群中一部分节点故障后，集群整体是否还能处理客户端的请求，p:分区容忍性，数据分区的意思是指是否允许集群中的节点之间无法通信
+e:ap,zookeep:cp
+3.当其他服务消费者通过服务名进行访问时报错.connection time out
+这是国为在开发环境中并没有DNS支持,所以当采用服务名进行通信的时候会报错，这时可以设置 eureka.instance.prefer-ip-address=true ,通过该设置，服务消费者
+就会通过IP地址来调用相关服务，而不是主机名称，默认情况下EUREAK客户端会使用spring框架中inetutils工具类的findFirstnon loopbackaddress()方法来获取服务
+实例所在宿主服务器主机的IP地址。如果是多网卡也可以通过手动设置IP:eureak.instance.ip-address=192.168.1.11,建议注册微服务用IP来注册而不是服务名
+4.服务访问安全
+1）spring.security.basic.enabled=true
+  spring.security.user.name=admin
+  spring.security.user.password=admin
+  引用spring-boot-starter-security依赖
+  eureka客户端可以通过配置提供安全认证：http://${spring.security.user.name}:${spring.security.user.password}@localhost:8260/eureka
+--restful
+1.调用restful进行微服务间的访问时，如果有注册可以直接用服务名,没有就直接写地址
+
+--feign
+1.整合ribbon，实现负载均衡
+2.EnableFeignClients：注意不在此根路径下得配：basePackages指定包路径,比如：your.service.base.package.**
+3.feign支持mvc的注解，但mvc中这些注解会以参数名称作为默认值,但feign不会，要声明。比如@RequestParam("itemcode")/@RequestHeader("itemcode")
+4.服务降级
+1）@FeignClient(name ="USERSERVICE",fallback=UserServiceFallback.class),也就是说对UserService创建实现类,实现类中的方法实现服务降级
+2）feign.hystrix.enabled=true
+--ribbon
+1.如果对某个类的请求单独配负载均衡策略
+参考 <spring cloud微服务架构开发实战> 4.6节深入ribbon 251页

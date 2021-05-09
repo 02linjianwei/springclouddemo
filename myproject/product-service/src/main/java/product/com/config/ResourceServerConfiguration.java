@@ -1,19 +1,15 @@
 package product.com.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.oauth2.provider.token.store.jwk.JwkTokenStore;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
@@ -32,7 +28,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     public void configure(ResourceServerSecurityConfigurer resourceServerSecurityConfigurer)  {
         resourceServerSecurityConfigurer.tokenStore(new JwtTokenStore(accessTokenConverter())).stateless(true);
         RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
-        remoteTokenServices.setAccessTokenConverter(accessTokenConverter());
+        remoteTokenServices.setAccessTokenConverter(l());
         restTemplate.setErrorHandler(new DefaultResponseErrorHandler(){
             @Override
             public void handleError(ClientHttpResponse response) throws IOException {
@@ -42,9 +38,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
             }
         });
         remoteTokenServices.setRestTemplate(restTemplate);
-        remoteTokenServices.setCheckTokenEndpointUrl("http://AUTHORIZATION-SERVER/oauth/check_token");
-        remoteTokenServices.setClientId("client");
-        remoteTokenServices.setClientSecret("secret");
+        remoteTokenServices.setCheckTokenEndpointUrl("http://securityservice/oauth/check_token");
+        remoteTokenServices.setClientId("client_2");
+        remoteTokenServices.setClientSecret("123456");
         resourceServerSecurityConfigurer.tokenServices(remoteTokenServices).stateless(true);
     }
     //配置JWT转换器

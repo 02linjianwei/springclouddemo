@@ -2,15 +2,21 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="zuul-server" />
-        <module name="product-service" />
         <module name="config-server" />
+        <module name="oauth2-client" />
+        <module name="automybatis" />
+        <module name="product-service" />
+        <module name="zipkin-server" />
         <module name="user-service" />
+        <module name="redis-demo" />
         <module name="service-discovery" />
+        <module name="security-server" />
       </profile>
     </annotationProcessing>
   </component>
