@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
             this.logger.info("已从REDIS缓存中获取到用户:{}的信息",id);
             return user;
         }
-        this.logger.info("REDIS缓存中不存在用户：｛｝的信息，尝试从远程进行加载",id);
+        this.logger.info("REDIS缓存中不存在用户:{}的信息，尝试从远程进行加载",id);
         user = this.userRemoteClient.load(id);
         if (null != user) {
             this.userRedisRepository.save(user);
