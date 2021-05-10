@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 /**
  1. 如果eurekaServer设置了登录密码   就必须关闭Spring Security的CSRF验证
  */
-@EnableWebSecurity
+
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 

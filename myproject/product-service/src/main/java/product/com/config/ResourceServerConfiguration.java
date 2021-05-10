@@ -22,13 +22,13 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         //httpSecurity.authorizeRequests().anyRequest().authenticated();//所有请求
-        httpSecurity.authorizeRequests().antMatchers("/user/**").authenticated();//user路径都要认证
+        //httpSecurity.authorizeRequests().antMatchers("/user/**").authenticated();//user路径都要认证
     }
     @Override
     public void configure(ResourceServerSecurityConfigurer resourceServerSecurityConfigurer)  {
         resourceServerSecurityConfigurer.tokenStore(new JwtTokenStore(accessTokenConverter())).stateless(true);
         RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
-        remoteTokenServices.setAccessTokenConverter(l());
+        remoteTokenServices.setAccessTokenConverter(accessTokenConverter());
         restTemplate.setErrorHandler(new DefaultResponseErrorHandler(){
             @Override
             public void handleError(ClientHttpResponse response) throws IOException {
