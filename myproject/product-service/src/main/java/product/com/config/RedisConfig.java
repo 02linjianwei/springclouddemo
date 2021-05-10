@@ -44,6 +44,7 @@ public class RedisConfig {
         return stringRedisTemplate;
     }
     @Bean
+    @LoadBalanced
     public OAuth2RestTemplate oAuth2RestTemplate() {
         return new OAuth2RestTemplate(details,oAuth2ClientContext);
     }

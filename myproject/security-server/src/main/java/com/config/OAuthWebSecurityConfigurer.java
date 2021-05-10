@@ -4,14 +4,26 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)//过滤器执行优先级设置
 public class OAuthWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+    @Override
+    @Bean
+    public UserDetailsService userDetailsServiceBean() throws Exception {
+        return super.userDetailsServiceBean();
+    }
+
     /**
      * 设置用户认证，并赋于角色
      * @param authenticationManagerBuilder
@@ -35,18 +47,18 @@ public class OAuthWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
      * @param
      * @throws Exception
      */
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//    //允许访问/oauth授权接口
-//        http.csrf().disable();
-//        http.requestMatchers().anyRequest()
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/oauth/**").permitAll();
-//    }
-@Bean
-    public PasswordEncoder passwordEncoder() {
-    //配置密码解码器
-    return NoOpPasswordEncoder.getInstance();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+    //允许访问/oauth授权接口
+        http.csrf().disable();
+        http.requestMatchers().anyRequest()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/oauth/**").permitAll();
     }
+//@Bean
+//    public PasswordEncoder passwordEncoder() {
+//    //配置密码解码器
+//    return NoOpPasswordEncoder.getInstance();
+//    }
 }
