@@ -29,3 +29,6 @@ MybatisSqlSessionFactoryBean 增加相应的配置
 ===================================
 7.springboot启动时报依赖包相关的错
 大概率版本对不上,如zk中guava与org.apache.curator的版本要对的上
+==========================================================
+8.Handling error: InvalidRequestException, Missing grant type
+url要带上grant_type=client_credentials
