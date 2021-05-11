@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)//过滤器执行优先级设置
@@ -51,14 +53,15 @@ public class OAuthWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     //允许访问/oauth授权接口
         http.csrf().disable();
-        http.requestMatchers().anyRequest()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/oauth/**").permitAll();
+//        http.requestMatchers().anyRequest()
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/oauth/**").permitAll();
+        super.configure(http);
     }
-//@Bean
-//    public PasswordEncoder passwordEncoder() {
-//    //配置密码解码器
-//    return NoOpPasswordEncoder.getInstance();
-//    }
+@Bean
+    public PasswordEncoder passwordEncoder() {
+    //配置密码解码器
+    return new BCryptPasswordEncoder();
+    }
 }

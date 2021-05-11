@@ -15,7 +15,7 @@ public class EncodeTest extends BaseAppManager {
     private PasswordEncoder passwordEncoder;
     @Test
     public void one() {
-        String a = passwordEncoder.encode("admin");
+        String a = passwordEncoder.encode("user");
         System.out.println("==========================");
         System.out.println(a);
     }
