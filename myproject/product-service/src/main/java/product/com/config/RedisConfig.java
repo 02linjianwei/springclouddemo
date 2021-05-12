@@ -11,8 +11,12 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
+import org.springframework.web.client.RestTemplate;
+import product.com.interceptor.JWTOAuthTokenInterceptor;
+
+import java.util.Collections;
+import java.util.List;
 
 @Configuration
 public class RedisConfig {
@@ -43,9 +47,25 @@ public class RedisConfig {
         stringRedisTemplate.setConnectionFactory(redisConnectionFactory);
         return stringRedisTemplate;
     }
+//    @Bean
+//    @LoadBalanced
+//    public OAuth2RestTemplate oAuth2RestTemplate() {
+//        return new OAuth2RestTemplate(details,oAuth2ClientContext);
+//    }
+
     @Bean
     @LoadBalanced
-    public OAuth2RestTemplate oAuth2RestTemplate() {
-        return new OAuth2RestTemplate(details,oAuth2ClientContext);
+    public RestTemplate oAuth2RestTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+        List interceptors = restTemplate.getInterceptors();
+        if (interceptors == null) {
+            restTemplate.setInterceptors(
+                    Collections.singletonList(new JWTOAuthTokenInterceptor())
+            );
+        } else {
+            interceptors.add(new JWTOAuthTokenInterceptor());
+            restTemplate.setInterceptors(interceptors);
+        }
+        return restTemplate;
     }
 }

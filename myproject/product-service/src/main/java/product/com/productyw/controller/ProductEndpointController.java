@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +15,6 @@ import product.com.productyw.Entity.ProductComment;
 import product.com.productyw.Entity.User;
 import product.com.productyw.service.UserService;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +26,7 @@ public class ProductEndpointController {
     @Value("${server.port}")
     public String servicePort;
     @Autowired
-    private OAuth2RestTemplate restTemplate;
+    private RestTemplate oAuth2RestTemplate;
 
     @Autowired
     private UserService userService;
@@ -45,7 +43,7 @@ public class ProductEndpointController {
     }
     @RequestMapping("/load/{id}")
     public User loadDetail(@PathVariable Long id) {
-        User user = this.restTemplate.getForEntity("http://localhost:2100/users/{id}",User.class,id).getBody();
+        User user = this.oAuth2RestTemplate.getForEntity("http://localhost:2100/users/{id}",User.class,id).getBody();
         return user;
     }
     @RequestMapping("/{id}/comments")
