@@ -12,7 +12,16 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     private RestTemplate restTemplate;
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests().anyRequest().authenticated();//所有请求
+        httpSecurity.authorizeRequests()
+                //.antMatchers("/products/**").hasAnyRole("admin")
+                .antMatchers("/products/**").hasAnyRole("USER")
+                //其他路径允许签名后访问
+                .anyRequest().permitAll()
+                //使用默认的登录页面
+                .and().formLogin()
+                //启用http基础验证
+                .and().httpBasic();
+        //httpSecurity.authorizeRequests().anyRequest().authenticated();//所有请求
         //httpSecurity.authorizeRequests().antMatchers("/user/**").authenticated();//user路径都要认证
     }
 //    @Override
