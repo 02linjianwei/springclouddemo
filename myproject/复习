@@ -24,7 +24,10 @@ e:ap,zookeep:cp
 1）@FeignClient(name ="USERSERVICE",fallback=UserServiceFallback.class),也就是说对UserService创建实现类,实现类中的方法实现服务降级
 2）feign.hystrix.enabled=true
 5.oauth转发时,hystrix策略导致token为空
-改用信息量的策略
+在FeignSupportConfig改用信息量的策略
+@FeignClient(name = "USER-SERVICE", configuration = FeignSupportConfig.class)
 --ribbon
 1.如果对某个类的请求单独配负载均衡策略
 参考 <spring cloud微服务架构开发实战> 4.6节深入ribbon 251页
+--消息中间件
+oauth2不影响消息中间件的交互
