@@ -2,6 +2,7 @@ package product.com.productyw.controller;
 
 import com.google.common.collect.Lists;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class ProductEndpointController {
         //return Lists.newArrayList(productComment);
     }
     @RequestMapping("/LoadUser/{userId}")
-    @HystrixCommand(fallbackMethod = "findAllFallback")
+    @HystrixCommand(fallbackMethod = "findAllFallback",commandProperties=@HystrixProperty(name="execution.isolation.strategy", value="SEMAPHORE"))
     public User LoadUser(@PathVariable Long userId) {
         User user1 = new User();
         user1.setId(123l);
