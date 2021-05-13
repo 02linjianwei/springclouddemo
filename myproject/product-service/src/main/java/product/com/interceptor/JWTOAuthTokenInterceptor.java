@@ -12,7 +12,7 @@ public class JWTOAuthTokenInterceptor implements ClientHttpRequestInterceptor {
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
         HttpHeaders httpHeaders = request.getHeaders();
-        httpHeaders.add(UserContext.AUTH_TOKEN,UserContext.getAuthToken().get());
+        httpHeaders.add(UserContext.AUTH_TOKEN,UserContext.getAuthToken());
         return execution.execute(request,body);
     }
 }

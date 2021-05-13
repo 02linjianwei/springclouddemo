@@ -76,6 +76,11 @@
         <artifactId>spring-security-jwt</artifactId>
     </dependency>
     <!-- 安全依赖 end-->
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt</artifactId>
+        <version>0.9.1</version>
+    </dependency>
 </dependencies>
 <!--    <properties>-->
 <!--        <maven.compiler.source>16</maven.compiler.source>-->
