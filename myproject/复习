@@ -30,4 +30,7 @@ e:ap,zookeep:cp
 1.如果对某个类的请求单独配负载均衡策略
 参考 <spring cloud微服务架构开发实战> 4.6节深入ribbon 251页
 --消息中间件
-oauth2不影响消息中间件的交互
+1.oauth2不影响消息中间件的交互
+2.自定义消息通道可以注入,之后的使用跟source.output()的调用一样
+@Autowired
+private MessageChannel outboundUserMsg;
