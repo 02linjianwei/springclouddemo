@@ -32,3 +32,9 @@ MybatisSqlSessionFactoryBean 增加相应的配置
 ==========================================================
 8.Handling error: InvalidRequestException, Missing grant type
 url要带上grant_type=client_credentials
+
+============================================================
+9springboot依赖oracle
+到Oracle安装目录找到jdbc驱动，目录：-Oracle\product\12.2.0\dbhome_1\jdbc\lib，复制ojdbc6.jar，这里我把它拷贝到F盘.  全路径F:\ojdbc6.jar。
+
+2、dos下执行命令mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=10.2.0.2.0 -Dpackaging=jar -Dfile=C:\ojdbc6.jar
