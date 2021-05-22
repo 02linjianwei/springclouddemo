@@ -38,3 +38,8 @@ url要带上grant_type=client_credentials
 到Oracle安装目录找到jdbc驱动，目录：-Oracle\product\12.2.0\dbhome_1\jdbc\lib，复制ojdbc6.jar，这里我把它拷贝到F盘.  全路径F:\ojdbc6.jar。
 
 2、dos下执行命令mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=10.2.0.2.0 -Dpackaging=jar -Dfile=C:\ojdbc6.jar
+
+======================================================
+10.接口多继承
+在Java类中，由于为了避免子类被引用的时候同一个方法无法判断应该使用哪个父类的方法，所以只能允许类单继承，
+但是，接口中的方法都是声明，都没有方法体。所以对于接口多继承接口后，如果接口中有系统的方法申明是没有关系的。
